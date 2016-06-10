@@ -1,0 +1,40 @@
+import app from '@angular/core';
+import {
+  Component,
+  Input,
+  Attribute
+} from '@angular/core';
+
+import {
+  Routes,
+  Route,
+  ROUTER_PROVIDERS,
+  ROUTER_DIRECTIVES
+} from '@angular/router';
+
+@Component({
+  selector: 'hello',
+  template: '<p>{{ message }}</p>'
+})
+export class Hello {
+  constructor() {
+    this.message = 'hello Angular 2';
+  }
+}
+
+@Component({
+  selector: 'hello-app',
+  directives: [ROUTER_DIRECTIVES],
+  template: `
+    <ul>
+      <li><a [routerLink]="['/']">Hello</a></li>
+      <li><a [routerLink]="['/ciao', 'ng2']">Ciao</a></li>
+    </ul>
+    <router-outlet></router-outlet>
+  `
+})
+@Routes([
+  new Route({ path: '/', component: Hello }),
+])
+export class HelloApp {
+}
