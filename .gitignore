@@ -1,3 +1,4 @@
 .git/
 web/js/*
+!web/js/.gitkeep
 node_modules/
