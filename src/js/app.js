@@ -26,10 +26,6 @@ export class Hello {
   selector: 'hello-app',
   directives: [ROUTER_DIRECTIVES],
   template: `
-    <ul>
-      <li><a [routerLink]="['/']">Hello</a></li>
-      <li><a [routerLink]="['/ciao', 'ng2']">Ciao</a></li>
-    </ul>
     <router-outlet></router-outlet>
   `
 })
