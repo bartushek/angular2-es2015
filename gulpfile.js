@@ -2,6 +2,20 @@ var gulp = require('gulp');
 var gulp = require("gulp");
 var gutil = require("gulp-util");
 var webpack = require("webpack");
+var browserSync = require('browser-sync').create();
+
+
+gulp.task('browser-sync', function() {
+    browserSync.init({
+        server: {
+            baseDir: "./web/"
+        }
+    });
+});
+
+gulp.task('js-watch', ['webpack'], function(){
+  browserSync.reload();
+});
 
 gulp.task("webpack", function(callback) {
     // run webpack
@@ -30,6 +44,6 @@ gulp.task("webpack", function(callback) {
     });
 });
 
-gulp.task('default', function() {
-  // place code for your default task here
+gulp.task('default', ['browser-sync'], function() {
+    gulp.watch("src/js/**/*.js", ['js-watch']);
 });
