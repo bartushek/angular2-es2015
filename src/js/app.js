@@ -1,39 +1,22 @@
-import app from '@angular/core';
-import {
-  Component,
-  Input,
-  Attribute
-} from '@angular/core';
-
-import {
-  Routes,
-  Route,
-  ROUTER_PROVIDERS,
-  ROUTER_DIRECTIVES
-} from '@angular/router';
+import { Component } from '@angular/core';
+import { Hero } from './objects/hero'
 
 @Component({
-  selector: 'hello',
-  template: '<p>{{ message }}</p>'
+  selector: 'my-app',
+  template:`
+    <h1>{{title}}</h1>
+    <h2>{{hero.name}} details!</h2>
+    <div><label>id: </label>{{hero.id}}</div>
+    <div>
+      <label>name: </label>
+      <input [(ngModel)]="hero.name" placeholder="name">
+    </div>
+    `
 })
-export class Hello {
-  constructor() {
-    this.message = 'hello Angular 2';
-  }
-}
-
-@Component({
-  selector: 'hello-app',
-  directives: [ROUTER_DIRECTIVES],
-  template: `
-    <ul>
-      <li><a [routerLink]="['/']">Hello</a></li>
-    </ul>
-    <router-outlet></router-outlet>
-  `
-})
-@Routes([
-  new Route({ path: '/', component: Hello }),
-])
-export class HelloApp {
+export class AppComponent {
+  title = 'Tour of Heroes';
+  hero: Hero = {
+    id: 1,
+    name: 'Windstorm'
+  };
 }

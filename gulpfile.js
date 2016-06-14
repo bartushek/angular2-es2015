@@ -3,6 +3,7 @@ var gulp = require("gulp");
 var gutil = require("gulp-util");
 var webpack = require("webpack");
 var browserSync = require('browser-sync').create();
+var runSequence = require('run-sequence');
 
 
 gulp.task('browser-sync', function() {
@@ -11,10 +12,6 @@ gulp.task('browser-sync', function() {
             baseDir: "./web/"
         }
     });
-});
-
-gulp.task('js-watch', ['webpack'], function(){
-  browserSync.reload();
 });
 
 gulp.task("webpack", function(callback) {
@@ -36,14 +33,19 @@ gulp.task("webpack", function(callback) {
            }]
        }
     }, function(err, stats) {
-        if(err) throw new gutil.PluginError("webpack", err);
-        gutil.log("[webpack]", stats.toString({
-            // output options
-        }));
         callback();
     });
 });
 
-gulp.task('default', ['browser-sync'], function() {
-    gulp.watch("src/js/**/*.js", ['js-watch']);
+gulp.task('default', function(){
+  runSequence(
+    'webpack',
+    'browser-sync',
+    function() {
+        gulp.watch("src/js/**/*.js", ['webpack']);
+        gulp.watch("web/**/*", function(){
+          browserSync.reload();
+        });
+    }
+  );
 });
